@@ -31,7 +31,7 @@ import javax.swing.*;
 	      //The Update Method////////////////////////////////////////////
 	      public void update(){
 	          hitWall();
-	          if(player1Score > 20 || player2Score > 20)
+	          if(player1Score > 10 || player2Score > 10)
 	          {
 	              gameEnd = true;
 	              xVelocity = 0;
