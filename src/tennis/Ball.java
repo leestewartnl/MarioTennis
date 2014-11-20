@@ -18,6 +18,7 @@ import javax.swing.*;
 	    protected int player1Score = 0;
 	    protected int player2Score = 0;
 	    public boolean gameEnd = false;
+	    public boolean servetime = false;//sean
 	    private Image ball = new ImageIcon("src/Resource/ball.png").getImage();
 	    boolean player1served = true;  // new code added
 	     
@@ -38,10 +39,25 @@ import javax.swing.*;
 	              yVelocity = 0;
 	          }else{
 	              if (x < 0) {
-	            	  int reply = JOptionPane.showConfirmDialog(null, "Do you challenge this point?", "Challenge", JOptionPane.OK_CANCEL_OPTION);
 	            	  
-	            	  /*
-	            	  synchronized (field.Human1){
+	            	  servetime = true;
+	            	  
+	            	 /* if(player1served)
+	            	  {
+	            		  //field.Human1.run();
+	            		  //field.Human2.run();
+	            		  serve();
+	            	  }
+	            	  else
+	            	  {
+	            		  //field.Human1.run();
+	            		  //field.Human2.run();
+	            		  serve2();
+	            	  }*/
+	            	  //int reply = JOptionPane.showConfirmDialog(null, "Do you challenge this point?", "Challenge", JOptionPane.OK_CANCEL_OPTION);
+	            	  
+	            	  
+	            	 /* synchronized (field.Human1){
 	            		  try{
 	            			  field.Human1.wait();
 	            		  }
@@ -57,23 +73,23 @@ import javax.swing.*;
 	            		  catch(InterruptedException e){
 	            			  e.printStackTrace();
 	            		  }
-	            	  }
+	            	  }*/
 	            	  
-	            	 */
+	            	 
 	  	              
-	            	  if (reply == JOptionPane.OK_OPTION)
+	            	  /*if (reply == joptionpane.ok_option)
 	                  {
 	                	  if(player1served)
 	                	  {
-	                		  //field.Human1.run();
-	                		  //field.Human2.run();
+	                		  //field.human1.run();
+	                		  //field.human2.run();
 	                		  serve();
 	                		
 	                	  }
 	                	  else
 	                	  {
-	                		  //field.Human1.run();
-	                		  //field.Human2.run();
+	                		  //field.human1.run();
+	                		  //field.human2.run();
 	                		  serve2();
 	                	  }
 	                  }
@@ -84,14 +100,29 @@ import javax.swing.*;
 	                	  player2Score = player2Score + 1;
 	                	  player1served = false;
 		                  serve2();
-	                  }
+	                  }*/
 	            	  
 	              }else if (x + size > Tennis.WINDOW_WIDTH - 6) {
 	            	  
-	            	  int reply = JOptionPane.showConfirmDialog(null, "Do you challenge this point?", "Challenge", JOptionPane.OK_CANCEL_OPTION);
+	            	  servetime = true;
 	            	  
-	            	  /*
-	            	  synchronized (field.Human1){
+	            	  /*if (player1served)
+            		  {
+            			  //field.Human1.run();
+                		 // field.Human2.run();
+            			  serve();
+            		  }
+            		  else
+            		  {
+            			  //field.Human1.run();
+                		  //field.Human2.run();
+            			  serve2();
+            		  }*/
+	            	  
+	            	  //int reply = JOptionPane.showConfirmDialog(null, "Do you challenge this point?", "Challenge", JOptionPane.OK_CANCEL_OPTION);
+	            	  
+	            	  
+	            	 /* synchronized (field.Human1){
 	            		  try{
 	            			  field.Human1.wait();
 	            		  }
@@ -107,11 +138,11 @@ import javax.swing.*;
 	            		  catch(InterruptedException e){
 	            			  e.printStackTrace();
 	            		  }
-	            	  }
-	            	  */
+	            	  }*/
 	            	  
 	            	  
-	            	  if (reply == JOptionPane.OK_OPTION)
+	            	  
+	            	  /*if (reply == JOptionPane.OK_OPTION)
 	                  {
 	            		  if (player1served)
 	            		  {
@@ -133,14 +164,16 @@ import javax.swing.*;
 	            		  player1Score = player1Score + 1;
 	            		  player1served = true;
 		                  serve();
-	            	  }
+	            	  }*/
 	            	  
 	            	  
 	              }
 	              if (y < 0) {
-	                serve();
+	            	  servetime = true;
+	                //serve();
 	              }else if (y + size > Tennis.WINDOW_HEIGHT - 28) {
-	                  serve();
+	            	  servetime = true;
+	                  //serve();
 	              }
 	              x = x + xVelocity;
 	              y = y + yVelocity;
@@ -150,7 +183,8 @@ import javax.swing.*;
 	       
 	      //Serve Method/////////////////////////////////////////////////
 	      private void serve(){
-	          this.x = field.getPlayer().getX() + field.getPlayer().getWidth();
+	          //this.x = field.getPlayer().getX() + field.getPlayer().getWidth();
+	    	  this.x = 0;
 	          this.y = field.getPlayer().getY();
 	          xVelocity = 5;
 	          yVelocity = 0;
@@ -227,7 +261,7 @@ import javax.swing.*;
 	      /////////////////////////////////////////////////////////////////
 	       
 	      //getComputerScore///////////////////////////////////////////////
-	      public int getComputerScore() {
+	      public int getPlayer2Score() {
 	        return player2Score;
 	      }
 	      /////////////////////////////////////////////////////////////////
@@ -281,4 +315,72 @@ import javax.swing.*;
 	              e.consume();
 	          }
 	      }
+	      
+	      public void keyPressed(KeyEvent e){
+	    	  
+	    	  if (e.getKeyCode() == KeyEvent.VK_Q && servetime){
+	        	  if(player1served)
+	        	  {
+            		  serve();
+            		  servetime = false;
+	        	  }
+            	  else
+            	  {
+            		  serve2();
+            		  servetime = false;
+            	  }
+	              //e.consume();
+	          }
+	    	  
+	    	  if (e.getKeyCode() == KeyEvent.VK_F1 ){
+	    		  if(JOptionPane.showConfirmDialog(null, "Do you challenge this point?", "Challenge", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+	    		  {
+                	  if(this.x<0){
+                		  if(player1served)
+                    	  {
+                    		  //field.human1.run();
+                    		  //field.human2.run();
+                    		  //serve();
+                			  servetime = true;
+                    	  }
+                    	  else
+                    	  {
+                    		  //field.human1.run();
+                    		  //field.human2.run();
+                    		  //serve2();
+                    		  servetime = true;
+                    	  }
+                	  }
+                	  else if(x + size > Tennis.WINDOW_WIDTH - 6)
+                	  {
+                		  if(player1served)
+                    	  {
+                    		  //field.human1.run();
+                    		  //field.human2.run();
+                    		  //serve();
+                			  servetime = true;
+                    	  }
+                    	  else
+                    	  {
+                    		  //field.human1.run();
+                    		  //field.human2.run();
+                    		  //serve2();
+                    		  servetime = true;
+                    	  }
+                	  }
+                  }
+                  else
+                  {
+                	  //field.Human1.run();
+            		  //field.Human2.run();
+                	  player2Score = player2Score + 1;
+                	  player1served = false;
+	                  //serve2();
+                	  servetime = true;
+                  }
+	        	  
+	          }
+	      }
+	      
+	      
 	}

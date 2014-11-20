@@ -71,6 +71,7 @@ package tennis;
 	        public void keyPressed(KeyEvent e){
 	            player1.keyPressed(e);
 	            player2.keyPressed(e);
+	            ball.keyPressed(e);
 	        }
 	        @Override
 	        public void keyReleased(KeyEvent e){
